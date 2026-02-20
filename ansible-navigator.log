@@ -1,0 +1,2 @@
+2026-02-18T12:08:29.660678+00:00 ERROR 'ansible_navigator.image_manager.puller._log_message' Execution environment pull failed
+2026-02-18T12:10:13.873677+00:00 ERROR 'ansible_navigator.image_manager.puller._log_message' Execution environment pull failed

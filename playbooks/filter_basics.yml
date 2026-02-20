@@ -1,0 +1,33 @@
+---
+- name: Jinja2 Basic filters
+  hosts: localhost
+  gather_facts: false
+  vars:
+    packages:
+      - httpd
+      - vim
+      - git
+    port: "8080"
+    students:
+      - name: Mainak
+        uid: 10021
+      - name: Sagar
+        uid: 10022
+
+  tasks:
+    - name: Convert string to integer
+      ansible.builtin.debug:
+        msg: " {{ port | int }}"
+
+    - name: Join list into String
+      ansible.builtin.debug:
+        msg: " {{ packages | join(',') }}"
+
+    - name : Upper String
+      ansible.builtin.debug:
+        msg: "{{ item | to_uppercase }}"
+      loop: "{{packages}}"
+
+    - name: Extract User Names
+      ansible.builtin.debug:
+        msg: " {{ students | map(attribute='name') }}"

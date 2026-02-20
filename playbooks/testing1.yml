@@ -1,0 +1,8 @@
+---
+- name: Testing the variables
+  hosts: webservers
+  gather_facts: false
+  tasks:
+     - name: showing ntp server
+       ansible.builtin.debug:
+         msg: "{{ntp_server}}"

@@ -1,0 +1,23 @@
+[defaults]
+# Points to your inventory file so you don't have to use -i every time
+inventory = /opt/ansible/ex374/inventory/hosts.ini
+
+# Limits the search path to avoid loading broken system plugins from /usr/share/ansible
+library = ./library
+module_utils = ./module_utils
+
+# Disables the creation of .retry files if a playbook fails
+retry_files_enabled = False
+
+# Sets the default user for SSH connections
+remote_user = ansible-user
+
+# Automatically suppresses the Python 3.11 "MutableMapping" warnings
+interpreter_python = /usr/local/bin/python3.11
+
+[privilege_escalation]
+# Standard settings for your RHEL labs
+become = True
+become_method = sudo
+become_user = root
+become_ask_pass = False

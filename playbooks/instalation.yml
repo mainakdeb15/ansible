@@ -1,0 +1,24 @@
+---
+- name: Installing Packager for RedHat Server
+  hosts: all
+  become: true
+  vars:
+    packages:
+      - httpd
+      - telnet
+
+  tasks:
+    - name: Installing HTTP
+      ansible.builtin.dnf:
+        name: httpd
+        state: latest
+      tags: install
+      loop: "{{ packages }}"
+      when: ansible_facts['os_family'] == "RedHat"
+      notify: Start HTTP Services
+
+  handlers:
+    - name: Start HTTP Services
+      ansible.builtin.service:
+        name: httpd
+        state: restarted 
