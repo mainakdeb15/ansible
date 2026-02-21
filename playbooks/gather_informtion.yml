@@ -1,0 +1,37 @@
+---
+- name: Gather Information from the host
+  hosts: webservers
+  gather_facts: true
+  become: false
+  tasks:
+
+    - name: Gather hostnames
+      ansible.builtin.shell: hostname
+      register: host
+
+    - name: Gather ips
+      ansible.builtin.shell: hostname -i
+      register: ip
+
+    - name: Gather IP of host
+      ansible.builtin.copy:
+        content: |
+          {% for h in ansible_play_hosts %}
+          the IP address of {{ hostvars[h].host.stdout }} is {{ hostvars[h].ip.stdout }}
+          {% endfor %}
+        dest: "/tmp/sys_info.txt"
+        owner: ansible-user
+        group: ansible-grp
+        mode: 0755
+      delegate_to: localhost
+      run_once: true
+
+    - name: Copy a file
+      ansible.builtin.copy:
+        src: /etc/sudoers
+        dest: "/tmp/sudoers_info_{{ inventory_hostname }}.txt"
+        owner: ansible-user
+        group: ansible-grp
+        mode: 0755
+      delegate_to: db1
+      run_once: false
